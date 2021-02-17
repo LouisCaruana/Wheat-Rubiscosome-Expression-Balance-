@@ -11,9 +11,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Gene_IDs
 
+<details>
+  <summary>Gene_IDs</summary>
 ```{r}
 Gene_IDs <- read.csv('Rubiscosome_Gene_IDs.csv')
 
 Gene_IDs
 
 ```
+</details>

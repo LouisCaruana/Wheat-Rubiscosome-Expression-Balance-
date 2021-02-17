@@ -4,6 +4,11 @@ Louis Caruana
 
 ## Gene\_IDs
 
+<details>
+<summary>
+Gene\_IDs
+</summary>
+
 ``` r
 Gene_IDs <- read.csv('Rubiscosome_Gene_IDs.csv')
 
@@ -35,3 +40,5 @@ Gene_IDs
     ## 22  RbcX_1  TraesCS5A02G459200 TraesCS5B02G468800 TraesCS5D02G470300
     ## 23  RbcX_2  TraesCS2A02G198700 TraesCS2B02G226100 TraesCS2D02G206500
     ## 24 XuBPase  TraesCS7A02G335600 TraesCS7B02G247200 TraesCS7D02G343300
+
+</details>
