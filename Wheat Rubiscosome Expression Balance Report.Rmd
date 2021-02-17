@@ -182,6 +182,8 @@ Rubiscosome_mean_leaf
 
 # Data Vizualisation
 
+### Leaves and Shoots
+
 
 ```{r Rubiscosome_Leaf_Fig}
 Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) + 

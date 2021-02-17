@@ -12,6 +12,7 @@ Wheat Rubiscosome Expression Balance Report
         dataframes](#split-rubiscosome_exp_data-into-three-separte-dataframes)
     -   [2.0.2 ](#section)
 -   [3 Data Vizualisation](#data-vizualisation)
+    -   [3.0.1 Leaves and Shoots](#leaves-and-shoots)
 
 # 1 Data Import
 
@@ -216,6 +217,8 @@ Rubiscosome_mean_leaf
     ## 11 XuBPase   112.   105.     85.6     302.     8.24
 
 # 3 Data Vizualisation
+
+### 3.0.1 Leaves and Shoots
 
 ``` r
 Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) + 
