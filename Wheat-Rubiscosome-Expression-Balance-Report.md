@@ -1,79 +1,37 @@
 Wheat Rubiscosome Expression Balance Report
 ================
 Louis Caruana
-17/02/2021
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax
-for authoring HTML, PDF, and MS Word documents. For more details on
-using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that
-includes both content as well as the output of any embedded R code
-chunks within the document. You can embed an R code chunk like this:
+## Gene\_IDs
 
 ``` r
-cars
+Gene_IDs <- read.csv('Rubiscosome_Gene_IDs.csv')
+
+Gene_IDs
 ```
 
-    ##    speed dist
-    ## 1      4    2
-    ## 2      4   10
-    ## 3      7    4
-    ## 4      7   22
-    ## 5      8   16
-    ## 6      9   10
-    ## 7     10   18
-    ## 8     10   26
-    ## 9     10   34
-    ## 10    11   17
-    ## 11    11   28
-    ## 12    12   14
-    ## 13    12   20
-    ## 14    12   24
-    ## 15    12   28
-    ## 16    13   26
-    ## 17    13   34
-    ## 18    13   34
-    ## 19    13   46
-    ## 20    14   26
-    ## 21    14   36
-    ## 22    14   60
-    ## 23    14   80
-    ## 24    15   20
-    ## 25    15   26
-    ## 26    15   54
-    ## 27    16   32
-    ## 28    16   40
-    ## 29    17   32
-    ## 30    17   40
-    ## 31    17   50
-    ## 32    18   42
-    ## 33    18   56
-    ## 34    18   76
-    ## 35    18   84
-    ## 36    19   36
-    ## 37    19   46
-    ## 38    19   68
-    ## 39    20   32
-    ## 40    20   48
-    ## 41    20   52
-    ## 42    20   56
-    ## 43    20   64
-    ## 44    22   66
-    ## 45    23   54
-    ## 46    24   70
-    ## 47    24   92
-    ## 48    24   93
-    ## 49    24  120
-    ## 50    25   85
-
-## Including Plots
-
-You can also embed plots, for example:
-
-![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/pressure-1.png)<!-- -->
-
-Note that the `echo = FALSE` parameter was added to the code chunk to
-prevent printing of the R code that generated the plot.
+    ##       Gene         A_Subgenome        B_Subgenome        D_Subgenome
+    ## 1     Bsd2  TraesCS7A02G341000 TraesCS7B02G242200 TraesCS7D02G338600
+    ## 2  Ca1Pase  TraesCS4A02G184100 TraesCS4B02G134600 TraesCS4D02G129300
+    ## 3  Cpn20_1  TraesCS2A02G146000 TraesCS2B02G171400 TraesCS2D02G150600
+    ## 4  Cpn20_2  TraesCS6A02G340300 TraesCS6B02G371500 TraesCS6D02G320800
+    ## 5  Cpn20_3  TraesCS7A02G161000 TraesCS7B02G066000 TraesCS7D02G162300
+    ## 6  Cpn20_4  TraesCS5A02G212500 TraesCS5B02G211200 TraesCS5D02G219500
+    ## 7  Cpn60_1  TraesCS5A02G366800 TraesCS5B02G368900 TraesCS5D02G376000
+    ## 8  Cpn60_2  TraesCS4A02G315500 TraesCS5B02G563900 TraesCS5D02G550700
+    ## 9   RbcS_1  TraesCS2A02G066700 TraesCS2B02G079100 TraesCS2D02G065100
+    ## 10  RbcS_2  TraesCS2A02G066800 TraesCS2B02G079200 TraesCS2D02G065200
+    ## 11  RbcS_3  TraesCS2A02G066900 TraesCS2B02G079300 TraesCS2D02G065300
+    ## 12  RbcS_4  TraesCS2A02G067000 TraesCS2B02G079400 TraesCS2D02G065400
+    ## 13  RbcS_5 TraesCS2A02G067100  TraesCS2B02G079500 TraesCS2D02G065500
+    ## 14  RbcS_6  TraesCS2A02G067200                                      
+    ## 15  RbcS_7  TraesCS2A02G067300 TraesCS2B02G078900 TraesCS2D02G065600
+    ## 16  RbcS_8  TraesCS5A02G165400 TraesCS5B02G162600 TraesCS5D02G169600
+    ## 17  RbcS_9  TraesCS5A02G165700 TraesCS5B02G162800 TraesCS5D02G169900
+    ## 18    Rca1  TraesCS4A02G177600 TraesCS4B02G140200 TraesCS4D02G134900
+    ## 19    Rca2  TraesCS4A02G177500 TraesCS4B02G140300 TraesCS4D02G135000
+    ## 20    Raf1  TraesCS1A02G142000 TraesCS1B02G159700 TraesCS1D02G141100
+    ## 21    Raf2  TraesCS5A02G545700 TraesCS4B02G379500  TraesCSU02G129700
+    ## 22  RbcX_1  TraesCS5A02G459200 TraesCS5B02G468800 TraesCS5D02G470300
+    ## 23  RbcX_2  TraesCS2A02G198700 TraesCS2B02G226100 TraesCS2D02G206500
+    ## 24 XuBPase  TraesCS7A02G335600 TraesCS7B02G247200 TraesCS7D02G343300
