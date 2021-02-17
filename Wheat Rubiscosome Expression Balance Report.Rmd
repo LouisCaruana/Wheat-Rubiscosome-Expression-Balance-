@@ -6,7 +6,6 @@ output:
     fig_height: 8
     number_sections: TRUE
     toc: TRUE
-    keep_html: TRUE
 ---
 
 ```{r setup, include=FALSE}
@@ -195,7 +194,6 @@ Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) +
   ggtitle('Leaves and Shoots')
 
 Rubiscosome_Leaf
-
 ```
 
 
