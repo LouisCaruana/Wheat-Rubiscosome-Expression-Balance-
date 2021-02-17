@@ -154,7 +154,7 @@ Rubiscosome_exp_heat <- Rubiscosome_exp_data %>%
 
 
 
-### 
+### Leaves and Shoots Data Summary
 
 ```{r}
 
@@ -171,11 +171,26 @@ Rubiscosome_mean_leaf <- Rubiscosome_exp_leaf %>%
   mutate(log2tpm = log2(tpm_total))
 
 
-Rubiscosome_mean_leaf
 ```
 
+### Spike Data Summary
+
+```{r}
+
+Rubiscosome_mean_spike <- Rubiscosome_exp_spike %>%
+  select("Triad", "A_tpm", "B_tpm", "D_tpm") %>%
+  group_by(Triad) %>%
+  summarise_all(mean) %>%
+  ungroup() %>%
+  separate(Triad, c("Gene", "Triad_Num")) %>%
+  select(-"Triad_Num") %>%
+  group_by(Gene) %>%
+  summarise_all(sum) %>% 
+  mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
+  mutate(log2tpm = log2(tpm_total))
 
 
+```
 
 
 
@@ -197,6 +212,21 @@ Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) +
 Rubiscosome_Leaf
 ```
 
+### Spike
+
+```{r Spike_Leaf_Fig}
+Rubiscosome_Spike <- ggtern(Rubiscosome_mean_spike, aes(D_tpm, B_tpm, A_tpm)) + 
+  geom_mask() +
+  geom_point(aes(color = Gene,
+                 size = log2tpm,
+                 alpha = 0.75)) +
+  theme_bw()  +
+  theme_showarrows() + 
+  ggtitle('Spike')
+
+Rubiscosome_Spike
+
+```
 
 
 
