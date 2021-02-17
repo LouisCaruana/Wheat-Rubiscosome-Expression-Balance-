@@ -184,7 +184,7 @@ Rubiscosome_mean_leaf
 # Data Vizualisation
 
 
-```{r}
+```{r Rubiscosome_Leaf_Fig}
 Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) + 
   geom_mask() +
   geom_point(aes(color = Gene,
@@ -195,7 +195,6 @@ Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) +
   ggtitle('Leaves and Shoots')
 
 Rubiscosome_Leaf
-ggsave('Rubiscosome_Leaf.png')
 
 ```
 
