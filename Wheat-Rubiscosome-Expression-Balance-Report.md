@@ -12,9 +12,11 @@ Wheat Rubiscosome Expression Balance Report
     -   [Leaves and Shoots Data
         Summary](#leaves-and-shoots-data-summary)
     -   [Spike Data Summary](#spike-data-summary)
+    -   [Heat Stress Summary](#heat-stress-summary)
 -   [Data Vizualisation](#data-vizualisation)
     -   [Leaves and Shoots](#leaves-and-shoots)
     -   [Spike](#spike)
+    -   [Heat Stress](#heat-stress)
 
 # Data Import
 
@@ -218,6 +220,52 @@ Rubiscosome_mean_spike <- Rubiscosome_exp_spike %>%
     ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
     ## 10, 22, 23, 24].
 
+### Heat Stress Summary
+
+``` r
+Rubiscosome_mean_heat <- Rubiscosome_exp_heat %>%
+  filter(Intermediate.stress == "heat") %>%
+  select("Triad", "A_tpm", "B_tpm", "D_tpm") %>%
+  group_by(Triad) %>%
+  summarise_all(mean) %>%
+  ungroup() %>%
+  separate(Triad, c("Gene", "Triad_Num")) %>%
+  select(-"Triad_Num") %>%
+  group_by(Gene) %>%
+  summarise_all(sum) %>%
+  mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
+  mutate(log2tpm = log2(tpm_total)) %>%
+  mutate(Stress = 'Heat')
+```
+
+    ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
+    ## 10, 22, 23, 24].
+
+``` r
+Rubiscosome_mean_contr <- Rubiscosome_exp_heat %>%
+  filter(Intermediate.stress == "contr") %>%
+  select("Triad", "A_tpm", "B_tpm", "D_tpm") %>%
+  group_by(Triad) %>%
+  summarise_all(mean) %>%
+  ungroup() %>%
+  separate(Triad, c("Gene", "Triad_Num")) %>%
+  select(-"Triad_Num") %>%
+  group_by(Gene) %>%
+  summarise_all(sum) %>%
+  mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
+  mutate(log2tpm = log2(tpm_total)) %>%
+  mutate(Stress = 'Control')
+```
+
+    ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
+    ## 10, 22, 23, 24].
+
+``` r
+Rubiscosome_mean_heat_control <- full_join(Rubiscosome_mean_heat, Rubiscosome_mean_contr )
+```
+
+    ## Joining, by = c("Gene", "A_tpm", "B_tpm", "D_tpm", "tpm_total", "log2tpm", "Stress")
+
 # Data Vizualisation
 
 ### Leaves and Shoots
@@ -253,3 +301,21 @@ Rubiscosome_Spike
 ```
 
 ![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/Spike_Leaf_Fig-1.png)<!-- -->
+
+### Heat Stress
+
+``` r
+Rubiscosome_Heat_Stress <- ggtern(Rubiscosome_mean_heat_control, aes(D_tpm, B_tpm, A_tpm)) + 
+  geom_mask() +
+  geom_point(aes(color = Gene,
+                 size = log2tpm,
+                 alpha = 0.75,
+                 shape = Stress)) +
+  theme_bw()  +
+  theme_showarrows() + 
+  ggtitle('Heat Stress')
+
+Rubiscosome_Heat_Stress
+```
+
+![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/Heat_Stress_Fig-1.png)<!-- -->

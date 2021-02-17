@@ -192,6 +192,41 @@ Rubiscosome_mean_spike <- Rubiscosome_exp_spike %>%
 
 ```
 
+### Heat Stress Summary
+
+```{r}
+Rubiscosome_mean_heat <- Rubiscosome_exp_heat %>%
+  filter(Intermediate.stress == "heat") %>%
+  select("Triad", "A_tpm", "B_tpm", "D_tpm") %>%
+  group_by(Triad) %>%
+  summarise_all(mean) %>%
+  ungroup() %>%
+  separate(Triad, c("Gene", "Triad_Num")) %>%
+  select(-"Triad_Num") %>%
+  group_by(Gene) %>%
+  summarise_all(sum) %>%
+  mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
+  mutate(log2tpm = log2(tpm_total)) %>%
+  mutate(Stress = 'Heat')
+  
+Rubiscosome_mean_contr <- Rubiscosome_exp_heat %>%
+  filter(Intermediate.stress == "contr") %>%
+  select("Triad", "A_tpm", "B_tpm", "D_tpm") %>%
+  group_by(Triad) %>%
+  summarise_all(mean) %>%
+  ungroup() %>%
+  separate(Triad, c("Gene", "Triad_Num")) %>%
+  select(-"Triad_Num") %>%
+  group_by(Gene) %>%
+  summarise_all(sum) %>%
+  mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
+  mutate(log2tpm = log2(tpm_total)) %>%
+  mutate(Stress = 'Control')
+
+Rubiscosome_mean_heat_control <- full_join(Rubiscosome_mean_heat, Rubiscosome_mean_contr )
+```
+
+
 
 
 # Data Vizualisation
@@ -228,6 +263,23 @@ Rubiscosome_Spike
 
 ```
 
+
+### Heat Stress
+
+```{r Heat_Stress_Fig}
+Rubiscosome_Heat_Stress <- ggtern(Rubiscosome_mean_heat_control, aes(D_tpm, B_tpm, A_tpm)) + 
+  geom_mask() +
+  geom_point(aes(color = Gene,
+                 size = log2tpm,
+                 alpha = 0.75,
+                 shape = Stress)) +
+  theme_bw()  +
+  theme_showarrows() + 
+  ggtitle('Heat Stress')
+
+Rubiscosome_Heat_Stress
+
+```
 
 
 
