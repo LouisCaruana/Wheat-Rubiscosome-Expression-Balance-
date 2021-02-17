@@ -1,6 +1,5 @@
 ---
 title: "Wheat Rubiscosome Expression Balance Report"
-author: "Louis Caruana"
 output: 
   github_document:
     fig_width: 5
@@ -17,7 +16,7 @@ library(ggtern)
 
 # Data Import
 
-This will only use data from the 7 studies listed below, that report similar non 
+This study will only use data from the 7 studies listed below, that report similar non 
 stress growth conditions in their manuscript;
 
 Study Name                                                  |Study Code  |
@@ -63,6 +62,7 @@ initial_tidy <- function(x, y="GeneName", z="Triad") {x %>%
     select("Gene",
            "Triad",
            "study",
+           "High.level.tissue",
            "Intermediate.stress",
            "Stress.disease",
            "A_tpm",
@@ -74,7 +74,6 @@ initial_tidy <- function(x, y="GeneName", z="Triad") {x %>%
 
 
 ```
-
 ```{r}
 Bsd2 <- initial_tidy(read.csv('Data/Bsd2.csv'), 'Bsd2', 'Bsd2')
 Ca1Pase <- initial_tidy(read.csv('Data/Ca1Pase.csv'), 'Ca1Pase', 'Ca1Pase')
@@ -102,6 +101,7 @@ RbcX_2 <- initial_tidy(read.csv('Data/RbcX_2.csv'), 'RbcX', 'RbcX_2')
 XuBPase <- initial_tidy(read.csv('Data/XuBPase.csv'), 'XuBPase', 'XuBPase')
 ```
 
+### Compile all data into `Rubiscosome_exp_data`
 ```{r message = FALSE}
 Rubiscosome_exp_data <- Bsd2 %>%
   full_join(Ca1Pase)%>%
@@ -127,13 +127,30 @@ Rubiscosome_exp_data <- Bsd2 %>%
   full_join(RbcX_1) %>%
   full_join(RbcX_2) %>%
   full_join(XuBPase)
-  
-  
+```
+### Split `Rubiscosome_exp_data` into three separte dataframes
 
-Rubiscosome_exp_data %>% summary()
+ + `Rubiscosome_exp_leaf` = Leaves and shoots data
+ + `Rubiscosome_exp_spike` = Spike data
+ + `Rubiscosome_exp_heat` = Data from heat stress study
+
+```{r}
+Rubiscosome_exp_leaf <- Rubiscosome_exp_data %>%
+  filter(study != 'SRP045409') %>%
+  filter(High.level.tissue == 'le+sh')
+
+Rubiscosome_exp_spike <- Rubiscosome_exp_data %>%
+  filter(study != 'SRP045409') %>%
+  filter(High.level.tissue == 'spike')
+
+Rubiscosome_exp_heat <- Rubiscosome_exp_data %>%
+  filter(study == 'SRP045409') %>%
+  filter(Intermediate.stress %in% c("heat", "contr"))
+
 ```
 
 
+# Data Analysis
 
 
 

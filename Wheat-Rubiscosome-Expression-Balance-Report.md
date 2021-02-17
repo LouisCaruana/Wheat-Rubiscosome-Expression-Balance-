@@ -1,15 +1,19 @@
 Wheat Rubiscosome Expression Balance Report
 ================
-Louis Caruana
 
 -   [Data Import](#data-import)
     -   [Data imported as triads](#data-imported-as-triads)
     -   [Create `initial_tidy` Function](#create-initial_tidy-function)
+    -   [Compile all data into
+        `Rubiscosome_exp_data`](#compile-all-data-into-rubiscosome_exp_data)
+    -   [Split `Rubiscosome_exp_data` into three separte
+        dataframes](#split-rubiscosome_exp_data-into-three-separte-dataframes)
+-   [Data Analysis](#data-analysis)
 
 # Data Import
 
-This will only use data from the 7 studies listed below, that report
-similar non stress growth conditions in their manuscript;
+This study will only use data from the 7 studies listed below, that
+report similar non stress growth conditions in their manuscript;
 
 | Study Name                                                   | Study Code    |
 |--------------------------------------------------------------|---------------|
@@ -82,6 +86,7 @@ initial_tidy <- function(x, y="GeneName", z="Triad") {x %>%
     select("Gene",
            "Triad",
            "study",
+           "High.level.tissue",
            "Intermediate.stress",
            "Stress.disease",
            "A_tpm",
@@ -118,6 +123,8 @@ RbcX_2 <- initial_tidy(read.csv('Data/RbcX_2.csv'), 'RbcX', 'RbcX_2')
 XuBPase <- initial_tidy(read.csv('Data/XuBPase.csv'), 'XuBPase', 'XuBPase')
 ```
 
+### Compile all data into `Rubiscosome_exp_data`
+
 ``` r
 Rubiscosome_exp_data <- Bsd2 %>%
   full_join(Ca1Pase)%>%
@@ -143,25 +150,26 @@ Rubiscosome_exp_data <- Bsd2 %>%
   full_join(RbcX_1) %>%
   full_join(RbcX_2) %>%
   full_join(XuBPase)
-  
-  
-
-Rubiscosome_exp_data %>% summary()
 ```
 
-    ##      Gene              Triad              study           Intermediate.stress
-    ##  Length:7416        Length:7416        Length:7416        Length:7416        
-    ##  Class :character   Class :character   Class :character   Class :character   
-    ##  Mode  :character   Mode  :character   Mode  :character   Mode  :character   
-    ##                                                                              
-    ##                                                                              
-    ##                                                                              
-    ##                                                                              
-    ##  Stress.disease         A_tpm               B_tpm               D_tpm          
-    ##  Length:7416        Min.   :    0.000   Min.   :    0.000   Min.   :    0.000  
-    ##  Class :character   1st Qu.:    3.234   1st Qu.:    4.131   1st Qu.:    3.055  
-    ##  Mode  :character   Median :   27.429   Median :   28.353   Median :   25.076  
-    ##                     Mean   :  512.123   Mean   :  421.069   Mean   :  562.776  
-    ##                     3rd Qu.:  139.764   3rd Qu.:  149.296   3rd Qu.:  142.952  
-    ##                     Max.   :15314.000   Max.   :12128.800   Max.   :18163.316  
-    ##                                         NA's   :309         NA's   :309
+### Split `Rubiscosome_exp_data` into three separte dataframes
+
+-   `Rubiscosome_exp_leaf` = Leaves and shoots data
+-   `Rubiscosome_exp_spike` = Spike data
+-   `Rubiscosome_exp_heat` = Data from heat stress study
+
+``` r
+Rubiscosome_exp_leaf <- Rubiscosome_exp_data %>%
+  filter(study != 'SRP045409') %>%
+  filter(High.level.tissue == 'le+sh')
+
+Rubiscosome_exp_spike <- Rubiscosome_exp_data %>%
+  filter(study != 'SRP045409') %>%
+  filter(High.level.tissue == 'spike')
+
+Rubiscosome_exp_heat <- Rubiscosome_exp_data %>%
+  filter(study == 'SRP045409') %>%
+  filter(Intermediate.stress %in% c("heat", "contr"))
+```
+
+# Data Analysis
