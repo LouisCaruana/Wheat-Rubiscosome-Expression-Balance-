@@ -2,8 +2,8 @@
 title: "Wheat Rubiscosome Expression Balance Report"
 output: 
   github_document:
-    fig_width: 5
-    fig_height: 5
+    fig_width: 8
+    fig_height: 8
     toc: TRUE
 ---
 
@@ -128,6 +128,9 @@ Rubiscosome_exp_data <- Bsd2 %>%
   full_join(RbcX_2) %>%
   full_join(XuBPase)
 ```
+
+# Data Analysis
+
 ### Split `Rubiscosome_exp_data` into three separte dataframes
 
  + `Rubiscosome_exp_leaf` = Leaves and shoots data
@@ -150,21 +153,48 @@ Rubiscosome_exp_heat <- Rubiscosome_exp_data %>%
 ```
 
 
-# Data Analysis
+
+### 
+
+```{r}
+
+Rubiscosome_mean_leaf <- Rubiscosome_exp_leaf %>%
+  select("Triad", "A_tpm", "B_tpm", "D_tpm") %>%
+  group_by(Triad) %>%
+  summarise_all(mean) %>%
+  ungroup() %>%
+  separate(Triad, c("Gene", "Triad_Num")) %>%
+  select(-"Triad_Num") %>%
+  group_by(Gene) %>%
+  summarise_all(sum) %>% 
+  mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
+  mutate(log2tpm = log2(tpm_total))
+
+
+Rubiscosome_mean_leaf
+```
 
 
 
 
 
 
+# Data Vizualisation
 
 
+```{r}
+Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) + 
+  geom_mask() +
+  geom_point(aes(color = Gene,
+                 size = log2tpm)) +
+  theme_bw()  +
+  theme_showarrows() + 
+  ggtitle('Leaves and Shoots')
+
+Rubiscosome_Leaf
 
 
-
-
-
-
+```
 
 
 

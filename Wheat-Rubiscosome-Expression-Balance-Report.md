@@ -6,9 +6,11 @@ Wheat Rubiscosome Expression Balance Report
     -   [Create `initial_tidy` Function](#create-initial_tidy-function)
     -   [Compile all data into
         `Rubiscosome_exp_data`](#compile-all-data-into-rubiscosome_exp_data)
+-   [Data Analysis](#data-analysis)
     -   [Split `Rubiscosome_exp_data` into three separte
         dataframes](#split-rubiscosome_exp_data-into-three-separte-dataframes)
--   [Data Analysis](#data-analysis)
+    -   [](#section)
+-   [Data Vizualisation](#data-vizualisation)
 
 # Data Import
 
@@ -152,6 +154,8 @@ Rubiscosome_exp_data <- Bsd2 %>%
   full_join(XuBPase)
 ```
 
+# Data Analysis
+
 ### Split `Rubiscosome_exp_data` into three separte dataframes
 
 -   `Rubiscosome_exp_leaf` = Leaves and shoots data
@@ -172,4 +176,56 @@ Rubiscosome_exp_heat <- Rubiscosome_exp_data %>%
   filter(Intermediate.stress %in% c("heat", "contr"))
 ```
 
-# Data Analysis
+### 
+
+``` r
+Rubiscosome_mean_leaf <- Rubiscosome_exp_leaf %>%
+  select("Triad", "A_tpm", "B_tpm", "D_tpm") %>%
+  group_by(Triad) %>%
+  summarise_all(mean) %>%
+  ungroup() %>%
+  separate(Triad, c("Gene", "Triad_Num")) %>%
+  select(-"Triad_Num") %>%
+  group_by(Gene) %>%
+  summarise_all(sum) %>% 
+  mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
+  mutate(log2tpm = log2(tpm_total))
+```
+
+    ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
+    ## 10, 22, 23, 24].
+
+``` r
+Rubiscosome_mean_leaf
+```
+
+    ## # A tibble: 11 x 6
+    ##    Gene      A_tpm  B_tpm   D_tpm tpm_total log2tpm
+    ##  * <chr>     <dbl>  <dbl>   <dbl>     <dbl>   <dbl>
+    ##  1 Bsd2      108.   104.    102.      314.     8.29
+    ##  2 Ca1Pase    24.6   19.6    25.8      70.0    6.13
+    ##  3 Cpn20     255.   274.    221.      750.     9.55
+    ##  4 Cpn60      29.9   25.7    22.8      78.4    6.29
+    ##  5 Raf1       14.0   16.4    16.6      47.0    5.55
+    ##  6 Raf2       37.1   49.4    59.6     146.     7.19
+    ##  7 RbcS    13420.  9698.  13880.    36999.    15.2 
+    ##  8 RbcX      129.   132.    137.      398.     8.64
+    ##  9 Rca1      112.   119.    287.      518.     9.02
+    ## 10 Rca2     3954.  3791.   4054.    11798.    13.5 
+    ## 11 XuBPase   112.   105.     85.6     302.     8.24
+
+# Data Vizualisation
+
+``` r
+Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) + 
+  geom_mask() +
+  geom_point(aes(color = Gene,
+                 size = log2tpm)) +
+  theme_bw()  +
+  theme_showarrows() + 
+  ggtitle('Leaves and Shoots')
+
+Rubiscosome_Leaf
+```
+
+![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
