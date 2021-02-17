@@ -275,7 +275,8 @@ Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) +
   geom_mask() +
   geom_point(aes(color = Gene,
                  size = log2tpm)) +
-  scale_size_binned(range = c(1, 10)) +
+  scale_size_binned(range = c(1, 10),
+                    breaks = c(7.5, 10, 12.5)) +
   scale_color_manual(values=c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
                               "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00",
                               "#cab2d6", "#6a3d9a", "#b15928" )) +
@@ -295,7 +296,8 @@ Rubiscosome_Spike <- ggtern(Rubiscosome_mean_spike, aes(D_tpm, B_tpm, A_tpm)) +
   geom_mask() +
   geom_point(aes(color = Gene,
                  size = log2tpm)) +
-    scale_size_binned(range = c(1, 10)) +
+    scale_size_binned(range = c(1, 10),
+                      breaks = c(7.5, 10, 12.5)) +
   scale_color_manual(values=c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
                               "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00",
                               "#cab2d6", "#6a3d9a", "#b15928" )) +
@@ -316,7 +318,8 @@ Rubiscosome_Heat_Stress <- ggtern(Rubiscosome_mean_heat_control, aes(D_tpm, B_tp
   geom_point(aes(color = Gene,
                  size = log2tpm,
                  shape = Stress)) +
-    scale_size_binned(range = c(1, 10)) +
+    scale_size_binned(range = c(1, 10),
+                      breaks = c(7.5, 10, 12.5)) +
   scale_color_manual(values=c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
                               "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00",
                               "#cab2d6", "#6a3d9a", "#b15928" )) +
