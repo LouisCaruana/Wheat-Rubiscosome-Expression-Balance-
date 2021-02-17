@@ -1,20 +1,19 @@
 Wheat Rubiscosome Expression Balance Report
 ================
 
--   [1 Data Import](#data-import)
-    -   [1.0.1 Data imported as triads](#data-imported-as-triads)
-    -   [1.0.2 Create `initial_tidy`
-        Function](#create-initial_tidy-function)
-    -   [1.0.3 Compile all data into
+-   [Data Import](#data-import)
+    -   [Data imported as triads](#data-imported-as-triads)
+    -   [Create `initial_tidy` Function](#create-initial_tidy-function)
+    -   [Compile all data into
         `Rubiscosome_exp_data`](#compile-all-data-into-rubiscosome_exp_data)
--   [2 Data Analysis](#data-analysis)
-    -   [2.0.1 Split `Rubiscosome_exp_data` into three separte
+-   [Data Analysis](#data-analysis)
+    -   [Split `Rubiscosome_exp_data` into three separte
         dataframes](#split-rubiscosome_exp_data-into-three-separte-dataframes)
-    -   [2.0.2 ](#section)
--   [3 Data Vizualisation](#data-vizualisation)
-    -   [3.0.1 Leaves and Shoots](#leaves-and-shoots)
+    -   [](#section)
+-   [Data Vizualisation](#data-vizualisation)
+    -   [Leaves and Shoots](#leaves-and-shoots)
 
-# 1 Data Import
+# Data Import
 
 This study will only use data from the 7 studies listed below, that
 report similar non stress growth conditions in their manuscript;
@@ -32,7 +31,7 @@ report similar non stress growth conditions in their manuscript;
 \*Data from this study will exclusively be used for the heat stress
 analysis
 
-### 1.0.1 Data imported as triads
+### Data imported as triads
 
 ``` r
 Gene_IDs <- read.csv('Rubiscosome_Gene_IDs.csv')
@@ -65,7 +64,7 @@ Gene_IDs
     ## 23  RbcX_2  TraesCS2A02G198700 TraesCS2B02G226100 TraesCS2D02G206500
     ## 24 XuBPase  TraesCS7A02G335600 TraesCS7B02G247200 TraesCS7D02G343300
 
-### 1.0.2 Create `initial_tidy` Function
+### Create `initial_tidy` Function
 
 -   Filters data for only the study codes in the above table
 -   Adds a Gene and Triad column containing strings supplied under y and
@@ -127,7 +126,7 @@ RbcX_2 <- initial_tidy(read.csv('Data/RbcX_2.csv'), 'RbcX', 'RbcX_2')
 XuBPase <- initial_tidy(read.csv('Data/XuBPase.csv'), 'XuBPase', 'XuBPase')
 ```
 
-### 1.0.3 Compile all data into `Rubiscosome_exp_data`
+### Compile all data into `Rubiscosome_exp_data`
 
 ``` r
 Rubiscosome_exp_data <- Bsd2 %>%
@@ -156,9 +155,9 @@ Rubiscosome_exp_data <- Bsd2 %>%
   full_join(XuBPase)
 ```
 
-# 2 Data Analysis
+# Data Analysis
 
-### 2.0.1 Split `Rubiscosome_exp_data` into three separte dataframes
+### Split `Rubiscosome_exp_data` into three separte dataframes
 
 -   `Rubiscosome_exp_leaf` = Leaves and shoots data
 -   `Rubiscosome_exp_spike` = Spike data
@@ -178,7 +177,7 @@ Rubiscosome_exp_heat <- Rubiscosome_exp_data %>%
   filter(Intermediate.stress %in% c("heat", "contr"))
 ```
 
-### 2.0.2 
+### 
 
 ``` r
 Rubiscosome_mean_leaf <- Rubiscosome_exp_leaf %>%
@@ -216,9 +215,9 @@ Rubiscosome_mean_leaf
     ## 10 Rca2     3954.  3791.   4054.    11798.    13.5 
     ## 11 XuBPase   112.   105.     85.6     302.     8.24
 
-# 3 Data Vizualisation
+# Data Vizualisation
 
-### 3.0.1 Leaves and Shoots
+### Leaves and Shoots
 
 ``` r
 Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) + 
