@@ -220,7 +220,8 @@ Rubiscosome_mean_leaf
 Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) + 
   geom_mask() +
   geom_point(aes(color = Gene,
-                 size = log2tpm)) +
+                 size = log2tpm,
+                 alpha = 0.75)) +
   theme_bw()  +
   theme_showarrows() + 
   ggtitle('Leaves and Shoots')
