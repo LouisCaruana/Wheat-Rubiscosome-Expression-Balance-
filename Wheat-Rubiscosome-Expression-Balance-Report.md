@@ -226,7 +226,7 @@ Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) +
   theme_showarrows() + 
   ggtitle('Leaves and Shoots')
 
-Rubiscosome_Leaf
+ggsave('Rubiscosome_Leaf.png')
 ```
 
-![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+    ## Saving 8 x 8 in image
