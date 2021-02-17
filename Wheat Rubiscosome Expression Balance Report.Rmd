@@ -2,10 +2,11 @@
 title: "Wheat Rubiscosome Expression Balance Report"
 output: 
   github_document:
-    fig_width: 4
-    fig_height: 4
-    dev: png
+    fig_width: 8
+    fig_height: 8
+    number_sections: TRUE
     toc: TRUE
+    keep_html: TRUE
 ---
 
 ```{r setup, include=FALSE}
