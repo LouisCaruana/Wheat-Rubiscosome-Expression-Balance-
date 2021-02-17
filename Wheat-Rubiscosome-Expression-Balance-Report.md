@@ -2,9 +2,32 @@ Wheat Rubiscosome Expression Balance Report
 ================
 Louis Caruana
 
+-   [Data Import](#data-import)
+    -   [Data imported as triads](#data-imported-as-triads)
+    -   [Create `initial_tidy` Function](#create-initial_tidy-function)
+
+# Data Import
+
+This will only use data from the 7 studies listed below, that report
+similar non stress growth conditions in their manuscript;
+
+| Study Name                                                   | Study Code    |
+|--------------------------------------------------------------|---------------|
+| Developmental time-course of Chinese Spring                  | choulet\_URGI |
+| Chinese Spring seedling and spikes at anthesis               | CS\_methylome |
+| Chinese Spring leaves and roots from seven leaf stage        | Aneuploidy    |
+| Chinese Spring early meiosis, early prophase                 | PRJEB25586    |
+| Developmental time-course of Azhurnaya                       | Development   |
+| Gene expression during a time course of flag leaf senescence | PRJNA497810   |
+| Drought and heat stress time course in seedlings\*           | SRP045409     |
+
+\*Data from this study will exclusively be used for the heat stress
+analysis
+
+### Data imported as triads
+
 ``` r
 Gene_IDs <- read.csv('Rubiscosome_Gene_IDs.csv')
-
 Gene_IDs
 ```
 
@@ -33,3 +56,112 @@ Gene_IDs
     ## 22  RbcX_1  TraesCS5A02G459200 TraesCS5B02G468800 TraesCS5D02G470300
     ## 23  RbcX_2  TraesCS2A02G198700 TraesCS2B02G226100 TraesCS2D02G206500
     ## 24 XuBPase  TraesCS7A02G335600 TraesCS7B02G247200 TraesCS7D02G343300
+
+### Create `initial_tidy` Function
+
+-   Filters data for only the study codes in the above table
+-   Adds a Gene and Triad column containing strings supplied under y and
+    z
+-   Renames the Gene\_ID column names to subgenome\_tpm e.g. `A_tpm`
+-   Selects for only relevent columns
+
+``` r
+initial_tidy <- function(x, y="GeneName", z="Triad") {x %>%
+    filter(study %in% c("choulet_URGI", 
+                        "CS_methylome",
+                        "Aneuploidy",
+                        "PRJEB25586", 
+                        "Development", 
+                        "PRJNA497810",
+                        "SRP045409")) %>%
+    mutate(Gene = y,
+           Triad = z) %>%
+    rename(A_tpm = 13,
+           B_tpm = 14,
+           D_tpm = 15) %>%
+    select("Gene",
+           "Triad",
+           "study",
+           "Intermediate.stress",
+           "Stress.disease",
+           "A_tpm",
+           "B_tpm",
+           "D_tpm")
+  
+}
+```
+
+``` r
+Bsd2 <- initial_tidy(read.csv('Data/Bsd2.csv'), 'Bsd2', 'Bsd2')
+Ca1Pase <- initial_tidy(read.csv('Data/Ca1Pase.csv'), 'Ca1Pase', 'Ca1Pase')
+Cpn20_1 <- initial_tidy(read.csv('Data/Cpn20_1.csv'), 'Cpn20', 'Cpn20_1')
+Cpn20_2 <- initial_tidy(read.csv('Data/Cpn20_2.csv'), 'Cpn20', 'Cpn20_2')
+Cpn20_3 <- initial_tidy(read.csv('Data/Cpn20_3.csv'), 'Cpn20', 'Cpn20_3')
+Cpn20_4 <- initial_tidy(read.csv('Data/Cpn20_4.csv'), 'Cpn20', 'Cpn20_4')
+Cpn60_1 <- initial_tidy(read.csv('Data/Cpn60_1.csv'), 'Cpn60', 'Cpn60_1')
+Cpn60_2 <- initial_tidy(read.csv('Data/Cpn60_2.csv'), 'Cpn60', 'Cpn60_2')
+RbcS_1 <- initial_tidy(read.csv('Data/RbcS_1.csv'), 'RbcS', 'RbcS_1')
+RbcS_2 <- initial_tidy(read.csv('Data/RbcS_2.csv'), 'RbcS', 'RbcS_2')
+RbcS_3 <- initial_tidy(read.csv('Data/RbcS_3.csv'), 'RbcS', 'RbcS_3')
+RbcS_4 <- initial_tidy(read.csv('Data/RbcS_4.csv'), 'RbcS', 'RbcS_4')
+RbcS_5 <- initial_tidy(read.csv('Data/RbcS_5.csv'), 'RbcS', 'RbcS_5')
+RbcS_6 <- initial_tidy(read.csv('Data/RbcS_6.csv'), 'RbcS', 'RbcS_6')
+RbcS_7 <- initial_tidy(read.csv('Data/RbcS_7.csv'), 'RbcS', 'RbcS_7')
+RbcS_8 <- initial_tidy(read.csv('Data/RbcS_8.csv'), 'RbcS', 'RbcS_8')
+RbcS_9 <- initial_tidy(read.csv('Data/RbcS_9.csv'), 'RbcS', 'RbcS_9')
+Rca1 <- initial_tidy(read.csv('Data/Rca1.csv'), 'Rca1', 'Rca1')
+Rca2 <- initial_tidy(read.csv('Data/Rca2.csv'), 'Rca2', 'Rca2')
+Raf1 <- initial_tidy(read.csv('data/Raf1.csv'), 'Raf1', 'Raf1')
+Raf2 <- initial_tidy(read.csv('Data/Raf2.csv'), 'Raf2', 'Raf2')
+RbcX_1 <- initial_tidy(read.csv('Data/RbcX_1.csv'), 'RbcX', 'RbcX_1')
+RbcX_2 <- initial_tidy(read.csv('Data/RbcX_2.csv'), 'RbcX', 'RbcX_2')
+XuBPase <- initial_tidy(read.csv('Data/XuBPase.csv'), 'XuBPase', 'XuBPase')
+```
+
+``` r
+Rubiscosome_exp_data <- Bsd2 %>%
+  full_join(Ca1Pase)%>%
+  full_join(Cpn20_1) %>%
+  full_join(Cpn20_2) %>%
+  full_join(Cpn20_3) %>%
+  full_join(Cpn20_4) %>%
+  full_join(Cpn60_1) %>%
+  full_join(Cpn60_2) %>%
+  full_join(RbcS_1) %>%
+  full_join(RbcS_2) %>%
+  full_join(RbcS_3) %>%
+  full_join(RbcS_4) %>%
+  full_join(RbcS_5) %>%
+  full_join(RbcS_6) %>%
+  full_join(RbcS_7) %>%
+  full_join(RbcS_8) %>%
+  full_join(RbcS_9) %>%
+  full_join(Rca1) %>%
+  full_join(Rca2) %>%
+  full_join(Raf1) %>%
+  full_join(Raf2) %>%
+  full_join(RbcX_1) %>%
+  full_join(RbcX_2) %>%
+  full_join(XuBPase)
+  
+  
+
+Rubiscosome_exp_data %>% summary()
+```
+
+    ##      Gene              Triad              study           Intermediate.stress
+    ##  Length:7416        Length:7416        Length:7416        Length:7416        
+    ##  Class :character   Class :character   Class :character   Class :character   
+    ##  Mode  :character   Mode  :character   Mode  :character   Mode  :character   
+    ##                                                                              
+    ##                                                                              
+    ##                                                                              
+    ##                                                                              
+    ##  Stress.disease         A_tpm               B_tpm               D_tpm          
+    ##  Length:7416        Min.   :    0.000   Min.   :    0.000   Min.   :    0.000  
+    ##  Class :character   1st Qu.:    3.234   1st Qu.:    4.131   1st Qu.:    3.055  
+    ##  Mode  :character   Median :   27.429   Median :   28.353   Median :   25.076  
+    ##                     Mean   :  512.123   Mean   :  421.069   Mean   :  562.776  
+    ##                     3rd Qu.:  139.764   3rd Qu.:  149.296   3rd Qu.:  142.952  
+    ##                     Max.   :15314.000   Max.   :12128.800   Max.   :18163.316  
+    ##                                         NA's   :309         NA's   :309
