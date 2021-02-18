@@ -394,7 +394,10 @@ base2 <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
                               "#cab2d6", "#6a3d9a", "#b15928" )) +
   theme_bw() +
   labs(title="Leaves and Shoots",
-       fill = "Classification")
+       fill = "Classification",
+       T="B",
+       L="A",
+       R="D")
 ```
 
     ## Warning: Ignoring unknown aesthetics: z
