@@ -374,10 +374,7 @@ base <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
   custom_percent("Percent") +
   labs(title="Shepard Sediment Classification Diagram",
        fill = "Classification")
-base
 ```
-
-![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ``` r
 LeavesShoots <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
