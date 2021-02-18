@@ -347,26 +347,31 @@ base
 
 
 
-```{r fig.width=8, fig.height=10}
-base2 <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
-  geom_polygon(aes(fill=Label,group=Label),color="black",alpha=0.25) +
-  geom_point(data=Rubiscosome_mean_leaf,
+```{r Leaves and Shoots, fig.height=12.5, fig.width=12.5}
+LeavesShoots <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
+  geom_polygon(aes(fill=Label,group=Label),color="#A0A4A7",alpha=0.20) +
+   scale_fill_manual(values=c("#A0A4A7", "#57A343", "#A8D38C", "#4B2B75",
+                              "#27C4F4", "#F9932F", "#FECF29" )) +
+  geom_point(data=Rubiscosome_mean_leaf%>%
+               arrange(desc(log2tpm)),
              aes(A_tpm,B_tpm,D_tpm, 
                  color=Gene,
-                 size=log2tpm,
-                 alpha=0.8)) + 
-  scale_size_binned(range = c(1, 10),
+                 size=log2tpm)) + 
+  scale_size_binned(range = c(1, 15),
                     breaks = c(7.5, 10, 12.5)) +
   scale_color_manual(values=c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
                               "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00",
                               "#cab2d6", "#6a3d9a", "#b15928" )) +
   theme_bw() +
+  guides(colour = guide_legend(override.aes = list(size=5))) +
+  theme(plot.title = element_text(size = 30))+
   labs(title="Leaves and Shoots",
        fill = "Classification",
        T="B",
        L="A",
        R="D")
-base2
+LeavesShoots
+
 
 
 ```
