@@ -14,9 +14,7 @@ Wheat Rubiscosome Expression Balance Report
     -   [Spike Data Summary](#spike-data-summary)
     -   [Heat Stress Summary](#heat-stress-summary)
 -   [Data Vizualisation](#data-vizualisation)
-    -   [Leaves and Shoots](#leaves-and-shoots)
-    -   [Spike](#spike)
-    -   [Heat Stress](#heat-stress)
+    -   [Base](#base)
 
 # Data Import
 
@@ -268,86 +266,141 @@ Rubiscosome_mean_heat_control <- full_join(Rubiscosome_mean_heat, Rubiscosome_me
 
 # Data Vizualisation
 
-### Leaves and Shoots
+### Base
 
 ``` r
-Rubiscosome_Leaf <- ggtern(Rubiscosome_mean_leaf, aes(D_tpm, B_tpm, A_tpm)) + 
-  geom_mask() +
-  geom_point(aes(color = Gene,
-                 size = log2tpm)) +
+#Build a library of points, left to right, top to bottom...
+points <- data.frame(
+  rbind(c( 1,1.000,0.000,0.000),
+        c( 2,0.780,0.220,0.000),
+        c( 3,0.660,0.170,0.170),
+        c( 4,0.780,0.000,0.220),
+        c( 5,0.220,0.780,0.000),
+        c( 6,0.220,0.000,0.780),
+        c( 7,0.170,0.670,0.170),
+        c( 8,0.170,0.170,0.660),
+        c( 9,0.000,1.000,0.000),
+        c(10,0.000,0.780,0.220),
+        c(11,0.000,0.220,0.780),
+        c(12,0.000,0.000,1.000),
+        c(13,0.660,0.170,0.170),
+        c(14,0.170,0.170,0.660),
+        c(15,0.220,0.000,0.780),
+        c(16,0.780,0.000,0.220),
+        c(17,0.660,0.170,0.170),
+        c(18,0.170,0.670,0.170),
+        c(19,0.220,0.780,0.000),
+        c(20,0.780,0.220,0.000),
+        c(21,0.170,0.670,0.170),
+        c(22,0.170,0.170,0.660),
+        c(23,0.000,0.220,0.780),
+        c(24,0.000,0.780,0.220)
+  )
+)
+colnames(points) = c("IDPoint","A_tpm","B_tpm","D_tpm")
+
+base <- ggtern(data=points,aes(A_tpm,B_tpm,D_tpm)) +
+  theme_bw() + theme_hidetitles() + theme_hidearrows() +
+  geom_point(shape=21,size=10,color="blue",fill="white") +
+  geom_text(aes(label=IDPoint),color="blue")
+
+
+
+
+
+#Give each Polygon a number
+polygon.labels <- data.frame(
+  Label=c("B dominant","",
+          " Balanced",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "A dominant",
+          "K",
+          "L",
+          "D dominant",
+          "A suppressed",
+          "O",
+          "P",
+          "Q",
+          "D suppressed",
+          "S",
+          "T",
+          "U",
+          "B suppressed",
+          "W",
+          "X",
+          "Y",
+          "Z",
+          "C"))
+#Assign each label an index
+polygon.labels$IDLabel=1:nrow(polygon.labels)
+
+
+
+
+
+#Create a map of polygons to points
+polygons <- data.frame(
+  rbind(c(1,1),c(1,2),c(1,3),c(1,4),
+        c(9,9),c(9,10),c(9,7),c(9,5),
+        c(12,12),c(12,6),c(12,8),c(12,11),
+        c(3,3),c(3,7),c(3,8),
+        c(13,13),c(13,14),c(13,15),c(13,16),
+        c(17,17),c(17,18),c(17,19),c(17,20),
+        c(21,21),c(21,22),c(21,23),c(21,24)
+  )
+)
+#IMPORTANT FOR CORRECT ORDERING.
+polygons$PointOrder <- 1:nrow(polygons)
+
+#Rename the columns
+colnames(polygons) = c("IDLabel","IDPoint","PointOrder")
+
+
+#Merge the three sets together to create a master set.
+df <- merge(polygons,points)
+df <- merge(df,polygon.labels)
+df <- df[order(df$PointOrder),]
+
+
+
+#Build the final plot
+base <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
+  geom_polygon(aes(fill=Label,group=Label),color="black",alpha=0.25) +
+  theme_bw() +
+  custom_percent("Percent") +
+  labs(title="Shepard Sediment Classification Diagram",
+       fill = "Classification")
+base
+```
+
+![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+``` r
+base2 <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
+  geom_polygon(aes(fill=Label,group=Label),color="black",alpha=0.25) +
+  geom_point(data=Rubiscosome_mean_leaf,
+             aes(A_tpm,B_tpm,D_tpm, 
+                 color=Gene,
+                 size=log2tpm,
+                 alpha=0.8)) + 
   scale_size_binned(range = c(1, 10),
                     breaks = c(7.5, 10, 12.5)) +
   scale_color_manual(values=c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
                               "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00",
                               "#cab2d6", "#6a3d9a", "#b15928" )) +
-  theme_bw()  +
-  theme_showarrows() + 
-  ggtitle('Leaves and Shoots')
-
-Rubiscosome_Leaf
+  theme_bw() +
+  labs(title="Leaves and Shoots",
+       fill = "Classification")
 ```
 
-![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/Rubiscosome_Leaf_Fig-1.png)<!-- -->
-
-### Spike
+    ## Warning: Ignoring unknown aesthetics: z
 
 ``` r
-Rubiscosome_Spike <- ggtern(Rubiscosome_mean_spike, aes(D_tpm, B_tpm, A_tpm)) + 
-  geom_mask() +
-  geom_point(aes(color = Gene,
-                 size = log2tpm)) +
-    scale_size_binned(range = c(1, 10),
-                      breaks = c(7.5, 10, 12.5)) +
-  scale_color_manual(values=c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
-                              "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00",
-                              "#cab2d6", "#6a3d9a", "#b15928" )) +
-  theme_bw()  +
-  theme_showarrows() + 
-  ggtitle('Spike')
-
-Rubiscosome_Spike
+base2
 ```
 
-![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/Spike_Leaf_Fig-1.png)<!-- -->
-
-### Heat Stress
-
-``` r
-Rubiscosome_Heat_Stress <- ggtern(Rubiscosome_mean_heat_control, aes(D_tpm, B_tpm, A_tpm)) + 
-  geom_mask() +
-  geom_point(aes(color = Gene,
-                 size = log2tpm,
-                 shape = Stress)) +
-    scale_size_binned(range = c(1, 10),
-                      breaks = c(7.5, 10, 12.5)) +
-  scale_color_manual(values=c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
-                              "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00",
-                              "#cab2d6", "#6a3d9a", "#b15928" )) +
-  theme_bw()  +
-  theme_showarrows() + 
-  ggtitle('Heat Stress')
-
-Rubiscosome_Heat_Stress
-```
-
-![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/Heat_Stress_Fig-1.png)<!-- -->
-
-``` r
-Rubiscosome_Heat_Stress_Rca <- ggtern(filter(Rubiscosome_mean_heat_control, Gene %in% c("Rca1", "Rca2") ), aes(D_tpm, B_tpm, A_tpm)) + 
-  geom_mask() +
-  geom_point(aes(color = Gene,
-                 size = log2tpm,
-                 shape = Stress)) +
-    scale_size_binned(range = c(1, 10),
-                      breaks = c(7.5, 10, 12.5)) +
-  scale_color_manual(values=c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
-                              "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00",
-                              "#cab2d6", "#6a3d9a", "#b15928" )) +
-  theme_bw()  +
-  theme_showarrows() + 
-  ggtitle('Heat Stress')
-
-Rubiscosome_Heat_Stress_Rca
-```
-
-![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/Heat_Stress_Rca_Fig-1.png)<!-- -->
+![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
