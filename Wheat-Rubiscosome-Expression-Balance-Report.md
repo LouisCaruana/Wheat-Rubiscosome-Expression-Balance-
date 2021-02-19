@@ -199,9 +199,6 @@ Rubiscosome_mean_leaf <- Rubiscosome_exp_leaf %>%
   mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm))
 ```
 
-    ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
-    ## 10, 22, 23, 24].
-
 ### Spike Data Summary
 
 ``` r
@@ -220,9 +217,6 @@ Rubiscosome_mean_spike <- Rubiscosome_exp_spike %>%
   mutate(B = B_tpm/(A_tpm + B_tpm + D_tpm)) %>%
   mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm))
 ```
-
-    ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
-    ## 10, 22, 23, 24].
 
 ### Heat Stress Summary
 
@@ -243,12 +237,7 @@ Rubiscosome_mean_heat <- Rubiscosome_exp_heat %>%
   mutate(A = A_tpm/(A_tpm + B_tpm + D_tpm)) %>%
   mutate(B = B_tpm/(A_tpm + B_tpm + D_tpm)) %>%
   mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm))
-```
-
-    ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
-    ## 10, 22, 23, 24].
-
-``` r
+  
 Rubiscosome_mean_contr <- Rubiscosome_exp_heat %>%
   filter(Intermediate.stress == "contr") %>%
   select("Triad", "A_tpm", "B_tpm", "D_tpm") %>%
@@ -265,12 +254,7 @@ Rubiscosome_mean_contr <- Rubiscosome_exp_heat %>%
   mutate(A = A_tpm/(A_tpm + B_tpm + D_tpm)) %>%
   mutate(B = B_tpm/(A_tpm + B_tpm + D_tpm)) %>%
   mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm))
-```
 
-    ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
-    ## 10, 22, 23, 24].
-
-``` r
 Rubiscosome_mean_heat_control <- full_join(Rubiscosome_mean_heat, Rubiscosome_mean_contr )
 ```
 
@@ -411,11 +395,6 @@ LeavesShoots <- ggtern(data=df,aes(A,B,D)) +
        T="B",
        L="A",
        R="D")
-```
-
-    ## Warning: Ignoring unknown aesthetics: z
-
-``` r
 LeavesShoots
 ```
 
@@ -444,11 +423,6 @@ Spike <- ggtern(data=df,aes(A,B,D)) +
        T="B",
        L="A",
        R="D")
-```
-
-    ## Warning: Ignoring unknown aesthetics: z
-
-``` r
 Spike
 ```
 
@@ -480,11 +454,6 @@ HeatStress <- ggtern(data=df,aes(A,B,D)) +
        T="B",
        L="A",
        R="D")
-```
-
-    ## Warning: Ignoring unknown aesthetics: z
-
-``` r
 HeatStress
 ```
 

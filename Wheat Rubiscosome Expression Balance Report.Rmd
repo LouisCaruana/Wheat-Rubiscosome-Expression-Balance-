@@ -156,7 +156,7 @@ Rubiscosome_exp_heat <- Rubiscosome_exp_data %>%
 
 ### Leaves and Shoots Data Summary
 
-```{r}
+```{r, warning=FALSE}
 
 Rubiscosome_mean_leaf <- Rubiscosome_exp_leaf %>%
   select("Triad", "A_tpm", "B_tpm", "D_tpm") %>%
@@ -179,7 +179,7 @@ Rubiscosome_mean_leaf <- Rubiscosome_exp_leaf %>%
 
 ### Spike Data Summary
 
-```{r}
+```{r, warning=FALSE}
 
 Rubiscosome_mean_spike <- Rubiscosome_exp_spike %>%
   select("Triad", "A_tpm", "B_tpm", "D_tpm") %>%
@@ -201,7 +201,7 @@ Rubiscosome_mean_spike <- Rubiscosome_exp_spike %>%
 
 ### Heat Stress Summary
 
-```{r}
+```{r, warning=FALSE}
 Rubiscosome_mean_heat <- Rubiscosome_exp_heat %>%
   filter(Intermediate.stress == "heat") %>%
   select("Triad", "A_tpm", "B_tpm", "D_tpm") %>%
@@ -360,7 +360,7 @@ base <- ggtern(data=df,aes(A,B,D)) +
 
 
 
-```{r Leaves and Shoots, fig.height=12.5, fig.width=12.5}
+```{r Leaves and Shoots, fig.height=12.5, fig.width=12.5, warning=FALSE}
 LeavesShoots <- ggtern(data=df,aes(A,B,D)) +
   geom_polygon(aes(fill=Label,group=Label),color="#A0A4A7",alpha=0.20) +
    scale_fill_manual(values=c("#A0A4A7", "#009933", "#00E64D", "#007ACC",
@@ -385,11 +385,9 @@ LeavesShoots <- ggtern(data=df,aes(A,B,D)) +
        R="D")
 LeavesShoots
 
-
-
 ```
 
-```{r Spike, fig.height=12.5, fig.width=12.5}
+```{r Spike, fig.height=12.5, fig.width=12.5, warning=FALSE}
 Spike <- ggtern(data=df,aes(A,B,D)) +
   geom_polygon(aes(fill=Label,group=Label),color="#A0A4A7",alpha=0.20) +
    scale_fill_manual(values=c("#A0A4A7", "#009933", "#00E64D", "#007ACC",
@@ -414,13 +412,11 @@ Spike <- ggtern(data=df,aes(A,B,D)) +
        R="D")
 Spike
 
-
-
 ```
 
 
 
-```{r HeatStress, fig.height=12.5, fig.width=12.5}
+```{r HeatStress, fig.height=12.5, fig.width=12.5, warning=FALSE}
 HeatStress <- ggtern(data=df,aes(A,B,D)) +
   geom_polygon(aes(fill=Label,group=Label),color="#A0A4A7",alpha=0.2) +
    scale_fill_manual(values=c("#A0A4A7", "#009933", "#00E64D", "#007ACC",
