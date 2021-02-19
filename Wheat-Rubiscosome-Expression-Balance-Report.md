@@ -391,8 +391,8 @@ base <- ggtern(data=df,aes(A,B,D)) +
 ``` r
 LeavesShoots <- ggtern(data=df,aes(A,B,D)) +
   geom_polygon(aes(fill=Label,group=Label),color="#A0A4A7",alpha=0.20) +
-   scale_fill_manual(values=c("#A0A4A7", "#57A343", "#A8D38C", "#4B2B75",
-                              "#27C4F4", "#F9932F", "#FECF29" )) +
+   scale_fill_manual(values=c("#A0A4A7", "#009933", "#00E64D", "#007ACC",
+                              "#33ADFF", "#FF8000", "#FFB366")) +
   geom_point(data=Rubiscosome_mean_leaf%>%
                arrange(desc(log2tpm)),
              aes(A,B,D, 
@@ -424,8 +424,8 @@ LeavesShoots
 ``` r
 Spike <- ggtern(data=df,aes(A,B,D)) +
   geom_polygon(aes(fill=Label,group=Label),color="#A0A4A7",alpha=0.20) +
-   scale_fill_manual(values=c("#A0A4A7", "#57A343", "#A8D38C", "#4B2B75",
-                              "#27C4F4", "#F9932F", "#FECF29" )) +
+   scale_fill_manual(values=c("#A0A4A7", "#009933", "#00E64D", "#007ACC",
+                              "#33ADFF", "#FF8000", "#FFB366")) +
   geom_point(data=Rubiscosome_mean_spike %>%
                arrange(desc(log2tpm)),
              aes(A,B,D, 
@@ -456,9 +456,9 @@ Spike
 
 ``` r
 HeatStress <- ggtern(data=df,aes(A,B,D)) +
-  geom_polygon(aes(fill=Label,group=Label),color="#A0A4A7",alpha=0.20) +
-   scale_fill_manual(values=c("#A0A4A7", "#57A343", "#A8D38C", "#4B2B75",
-                              "#27C4F4", "#F9932F", "#FECF29" )) +
+  geom_polygon(aes(fill=Label,group=Label),color="#A0A4A7",alpha=0.2) +
+   scale_fill_manual(values=c("#A0A4A7", "#009933", "#00E64D", "#007ACC",
+                              "#33ADFF", "#FF8000", "#FFB366")) +
   geom_point(data=Rubiscosome_mean_heat_control %>%
                arrange(desc(log2tpm)),
              aes(A,B,D, 
@@ -472,7 +472,8 @@ HeatStress <- ggtern(data=df,aes(A,B,D)) +
                               "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00",
                               "#cab2d6", "#6a3d9a", "#b15928" )) +
   theme_bw() +
-  guides(colour = guide_legend(override.aes = list(size=5))) +
+  guides(colour = guide_legend(override.aes = list(size=5)),
+         shape = guide_legend(override.aes = list(size=5))) +
   theme(plot.title = element_text(size = 30))+
   labs(title="Heat Stress",
        fill = "Classification",
