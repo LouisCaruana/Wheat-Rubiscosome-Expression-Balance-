@@ -193,7 +193,10 @@ Rubiscosome_mean_leaf <- Rubiscosome_exp_leaf %>%
   group_by(Gene) %>%
   summarise_all(sum) %>% 
   mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
-  mutate(log2tpm = log2(tpm_total))
+  mutate(log2tpm = log2(tpm_total)) %>%
+  mutate(A = A_tpm/(A_tpm + B_tpm + D_tpm)) %>%
+  mutate(B = B_tpm/(A_tpm + B_tpm + D_tpm)) %>%
+  mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm))
 ```
 
     ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
@@ -212,7 +215,10 @@ Rubiscosome_mean_spike <- Rubiscosome_exp_spike %>%
   group_by(Gene) %>%
   summarise_all(sum) %>% 
   mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
-  mutate(log2tpm = log2(tpm_total))
+  mutate(log2tpm = log2(tpm_total)) %>%
+  mutate(A = A_tpm/(A_tpm + B_tpm + D_tpm)) %>%
+  mutate(B = B_tpm/(A_tpm + B_tpm + D_tpm)) %>%
+  mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm))
 ```
 
     ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
@@ -233,7 +239,10 @@ Rubiscosome_mean_heat <- Rubiscosome_exp_heat %>%
   summarise_all(sum) %>%
   mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
   mutate(log2tpm = log2(tpm_total)) %>%
-  mutate(Stress = 'Heat Stress')
+  mutate(Stress = 'Heat Stress') %>%
+  mutate(A = A_tpm/(A_tpm + B_tpm + D_tpm)) %>%
+  mutate(B = B_tpm/(A_tpm + B_tpm + D_tpm)) %>%
+  mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm))
 ```
 
     ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
@@ -252,7 +261,10 @@ Rubiscosome_mean_contr <- Rubiscosome_exp_heat %>%
   summarise_all(sum) %>%
   mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
   mutate(log2tpm = log2(tpm_total)) %>%
-  mutate(Stress = 'Control')
+  mutate(Stress = 'Control') %>%
+  mutate(A = A_tpm/(A_tpm + B_tpm + D_tpm)) %>%
+  mutate(B = B_tpm/(A_tpm + B_tpm + D_tpm)) %>%
+  mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm))
 ```
 
     ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
@@ -262,7 +274,7 @@ Rubiscosome_mean_contr <- Rubiscosome_exp_heat %>%
 Rubiscosome_mean_heat_control <- full_join(Rubiscosome_mean_heat, Rubiscosome_mean_contr )
 ```
 
-    ## Joining, by = c("Gene", "A_tpm", "B_tpm", "D_tpm", "tpm_total", "log2tpm", "Stress")
+    ## Joining, by = c("Gene", "A_tpm", "B_tpm", "D_tpm", "tpm_total", "log2tpm", "Stress", "A", "B", "D")
 
 # Data Vizualisation
 
@@ -297,9 +309,9 @@ points <- data.frame(
         c(24,0.000,0.780,0.220)
   )
 )
-colnames(points) = c("IDPoint","A_tpm","B_tpm","D_tpm")
+colnames(points) = c("IDPoint","A","B","D")
 
-base <- ggtern(data=points,aes(A_tpm,B_tpm,D_tpm)) +
+base <- ggtern(data=points,aes(A,B,D)) +
   theme_bw() + theme_hidetitles() + theme_hidearrows() +
   geom_point(shape=21,size=10,color="blue",fill="white") +
   geom_text(aes(label=IDPoint),color="blue")
@@ -368,7 +380,7 @@ df <- df[order(df$PointOrder),]
 
 
 #Build the final plot
-base <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
+base <- ggtern(data=df,aes(A,B,D)) +
   geom_polygon(aes(fill=Label,group=Label),color="black",alpha=0.25) +
   theme_bw() +
   custom_percent("Percent") +
@@ -377,13 +389,13 @@ base <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
 ```
 
 ``` r
-LeavesShoots <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
+LeavesShoots <- ggtern(data=df,aes(A,B,D)) +
   geom_polygon(aes(fill=Label,group=Label),color="#A0A4A7",alpha=0.20) +
    scale_fill_manual(values=c("#A0A4A7", "#57A343", "#A8D38C", "#4B2B75",
                               "#27C4F4", "#F9932F", "#FECF29" )) +
   geom_point(data=Rubiscosome_mean_leaf%>%
                arrange(desc(log2tpm)),
-             aes(A_tpm,B_tpm,D_tpm, 
+             aes(A,B,D, 
                  color=Gene,
                  size=log2tpm)) + 
   scale_size_binned(range = c(1, 15),
@@ -410,13 +422,13 @@ LeavesShoots
 ![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/Leaves%20and%20Shoots-1.png)<!-- -->
 
 ``` r
-Spike <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
+Spike <- ggtern(data=df,aes(A,B,D)) +
   geom_polygon(aes(fill=Label,group=Label),color="#A0A4A7",alpha=0.20) +
    scale_fill_manual(values=c("#A0A4A7", "#57A343", "#A8D38C", "#4B2B75",
                               "#27C4F4", "#F9932F", "#FECF29" )) +
   geom_point(data=Rubiscosome_mean_spike %>%
                arrange(desc(log2tpm)),
-             aes(A_tpm,B_tpm,D_tpm, 
+             aes(A,B,D, 
                  color=Gene,
                  size=log2tpm)) + 
   scale_size_binned(range = c(1, 15),
@@ -443,13 +455,13 @@ Spike
 ![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/Spike-1.png)<!-- -->
 
 ``` r
-HeatStress <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
+HeatStress <- ggtern(data=df,aes(A,B,D)) +
   geom_polygon(aes(fill=Label,group=Label),color="#A0A4A7",alpha=0.20) +
    scale_fill_manual(values=c("#A0A4A7", "#57A343", "#A8D38C", "#4B2B75",
                               "#27C4F4", "#F9932F", "#FECF29" )) +
   geom_point(data=Rubiscosome_mean_heat_control %>%
                arrange(desc(log2tpm)),
-             aes(A_tpm,B_tpm,D_tpm, 
+             aes(A,B,D, 
                  color=Gene,
                  size=log2tpm,
                  shape=Stress)) +
