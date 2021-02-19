@@ -427,7 +427,7 @@ HeatStress <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
   theme_bw() +
   guides(colour = guide_legend(override.aes = list(size=5))) +
   theme(plot.title = element_text(size = 30))+
-  labs(title="Spike",
+  labs(title="Heat Stress",
        fill = "Classification",
        T="B",
        L="A",
