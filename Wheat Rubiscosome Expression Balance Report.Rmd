@@ -207,7 +207,7 @@ Rubiscosome_mean_heat <- Rubiscosome_exp_heat %>%
   summarise_all(sum) %>%
   mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
   mutate(log2tpm = log2(tpm_total)) %>%
-  mutate(Stress = 'Heat')
+  mutate(Stress = 'Heat Stress')
   
 Rubiscosome_mean_contr <- Rubiscosome_exp_heat %>%
   filter(Intermediate.stress == "contr") %>%
@@ -433,9 +433,6 @@ HeatStress <- ggtern(data=df,aes(A_tpm,B_tpm,D_tpm)) +
        L="A",
        R="D")
 HeatStress
-
-
-
 
 ```
 

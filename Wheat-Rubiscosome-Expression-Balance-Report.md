@@ -233,7 +233,7 @@ Rubiscosome_mean_heat <- Rubiscosome_exp_heat %>%
   summarise_all(sum) %>%
   mutate(tpm_total = (A_tpm + B_tpm + D_tpm)) %>%
   mutate(log2tpm = log2(tpm_total)) %>%
-  mutate(Stress = 'Heat')
+  mutate(Stress = 'Heat Stress')
 ```
 
     ## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 7 rows [1, 2, 9,
