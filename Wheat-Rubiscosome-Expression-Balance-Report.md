@@ -458,3 +458,35 @@ HeatStress
 ```
 
 ![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/HeatStress-1.png)<!-- -->
+
+``` r
+HeatStressRca <- ggtern(data=df,aes(A,B,D)) +
+  geom_polygon(aes(fill=Label,group=Label),color="#A0A4A7",alpha=0.2) +
+   scale_fill_manual(values=c("#A0A4A7", "#009933", "#00E64D", "#007ACC",
+                              "#33ADFF", "#FF8000", "#FFB366")) +
+  geom_point(data=Rubiscosome_mean_heat_control %>% 
+               filter(Gene %in% c("Rca1", "Rca2")) %>%
+               arrange(desc(log2tpm)),
+             aes(A,B,D, 
+                 color=Gene,
+                 size=log2tpm,
+                 shape=Stress)) +
+  scale_shape_manual(values=c(18, 15)) +
+  scale_size_binned(range = c(1, 15),
+                    breaks = c(7.5, 10, 12.5)) +
+  scale_color_manual(values=c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
+                              "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00",
+                              "#cab2d6", "#6a3d9a", "#b15928" )) +
+  theme_bw() +
+  guides(colour = guide_legend(override.aes = list(size=5)),
+         shape = guide_legend(override.aes = list(size=5))) +
+  theme(plot.title = element_text(size = 30))+
+  labs(title="Heat Stress",
+       fill = "Classification",
+       T="B",
+       L="A",
+       R="D")
+HeatStressRca
+```
+
+![](Wheat-Rubiscosome-Expression-Balance-Report_files/figure-gfm/HeatStressRca-1.png)<!-- -->
