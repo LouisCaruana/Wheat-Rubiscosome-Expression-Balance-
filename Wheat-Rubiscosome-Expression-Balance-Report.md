@@ -196,7 +196,8 @@ Rubiscosome_mean_leaf <- Rubiscosome_exp_leaf %>%
   mutate(log2tpm = log2(tpm_total)) %>%
   mutate(A = A_tpm/(A_tpm + B_tpm + D_tpm)) %>%
   mutate(B = B_tpm/(A_tpm + B_tpm + D_tpm)) %>%
-  mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm))
+  mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm)) %>%
+  mutate(log2tpm = round(log2tpm, 1))
 ```
 
 ### Spike Data Summary
@@ -215,7 +216,8 @@ Rubiscosome_mean_spike <- Rubiscosome_exp_spike %>%
   mutate(log2tpm = log2(tpm_total)) %>%
   mutate(A = A_tpm/(A_tpm + B_tpm + D_tpm)) %>%
   mutate(B = B_tpm/(A_tpm + B_tpm + D_tpm)) %>%
-  mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm))
+  mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm)) %>%
+  mutate(log2tpm = round(log2tpm, 1))
 ```
 
 ### Heat Stress Summary
@@ -255,7 +257,8 @@ Rubiscosome_mean_contr <- Rubiscosome_exp_heat %>%
   mutate(B = B_tpm/(A_tpm + B_tpm + D_tpm)) %>%
   mutate(D = D_tpm/(A_tpm + B_tpm + D_tpm))
 
-Rubiscosome_mean_heat_control <- full_join(Rubiscosome_mean_heat, Rubiscosome_mean_contr )
+Rubiscosome_mean_heat_control <- full_join(Rubiscosome_mean_heat, Rubiscosome_mean_contr ) %>%
+  mutate(log2tpm = round(log2tpm, 1))
 ```
 
     ## Joining, by = c("Gene", "A_tpm", "B_tpm", "D_tpm", "tpm_total", "log2tpm", "Stress", "A", "B", "D")
@@ -389,12 +392,14 @@ LeavesShoots <- ggtern(data=df,aes(A,B,D)) +
                               "#cab2d6", "#6a3d9a", "#b15928" )) +
   theme_bw() +
   guides(colour = guide_legend(override.aes = list(size=5))) +
-  theme(plot.title = element_text(size = 30))+
+  theme(plot.title = element_text(size = 30),
+        text = element_text(size=20))+
   labs(title="Leaves and Shoots",
        fill = "Classification",
        T="B",
        L="A",
-       R="D")
+       R="D",
+       size="Log2 TPM")
 LeavesShoots
 ```
 
@@ -417,12 +422,14 @@ Spike <- ggtern(data=df,aes(A,B,D)) +
                               "#cab2d6", "#6a3d9a", "#b15928" )) +
   theme_bw() +
   guides(colour = guide_legend(override.aes = list(size=5))) +
-  theme(plot.title = element_text(size = 30))+
+  theme(plot.title = element_text(size = 30),
+        text = element_text(size=20))+
   labs(title="Spike",
        fill = "Classification",
        T="B",
        L="A",
-       R="D")
+       R="D",
+       size="Log2 TPM")
 Spike
 ```
 
@@ -438,8 +445,9 @@ HeatStress <- ggtern(data=df,aes(A,B,D)) +
              aes(A,B,D, 
                  color=Gene,
                  size=log2tpm,
-                 shape=Stress)) +
-  scale_shape_manual(values=c(18, 15)) +
+                 shape=Stress,
+                 stroke=4)) +
+  scale_shape_manual(values=c(21, 16)) +
   scale_size_binned(range = c(1, 15),
                     breaks = c(7.5, 10, 12.5)) +
   scale_color_manual(values=c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
@@ -448,12 +456,14 @@ HeatStress <- ggtern(data=df,aes(A,B,D)) +
   theme_bw() +
   guides(colour = guide_legend(override.aes = list(size=5)),
          shape = guide_legend(override.aes = list(size=5))) +
-  theme(plot.title = element_text(size = 30))+
+  theme(plot.title = element_text(size = 30),
+        text = element_text(size=20))+
   labs(title="Heat Stress",
        fill = "Classification",
        T="B",
        L="A",
-       R="D")
+       R="D",
+       size="Log2 TPM")
 HeatStress
 ```
 
@@ -470,22 +480,23 @@ HeatStressRca <- ggtern(data=df,aes(A,B,D)) +
              aes(A,B,D, 
                  color=Gene,
                  size=log2tpm,
-                 shape=Stress)) +
-  scale_shape_manual(values=c(18, 15)) +
+                 shape=Stress,
+                 stroke = 4)) +
+  scale_shape_manual(values=c(21, 16)) +
   scale_size_binned(range = c(1, 15),
                     breaks = c(7.5, 10, 12.5)) +
-  scale_color_manual(values=c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
-                              "#fb9a99", "#e31a1c", "#fdbf6f", "#ff7f00",
-                              "#cab2d6", "#6a3d9a", "#b15928" )) +
+  scale_color_manual(values=c("#cab2d6", "#6a3d9a")) +
   theme_bw() +
   guides(colour = guide_legend(override.aes = list(size=5)),
          shape = guide_legend(override.aes = list(size=5))) +
-  theme(plot.title = element_text(size = 30))+
-  labs(title="Heat Stress",
+  theme(plot.title = element_text(size = 30),
+        text = element_text(size=20))+
+  labs(title="Rca Heat Stress",
        fill = "Classification",
        T="B",
        L="A",
-       R="D")
+       R="D",
+       size="Log2 TPM")
 HeatStressRca
 ```
 
