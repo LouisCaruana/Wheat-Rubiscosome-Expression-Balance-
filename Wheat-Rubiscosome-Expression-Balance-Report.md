@@ -449,7 +449,7 @@ HeatStress <- ggtern(data=df,aes(A,B,D)) +
                  size=log2tpm,
                  shape=Stress,
                  stroke=4)) +
-  scale_shape_manual(values=c(21, 16)) +
+  scale_shape_manual(values=c(16, 21)) +
   scale_size_binned(range = c(1, 15),
                     breaks = c(7.5, 10, 12.5)) +
   scale_color_manual(values=c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
@@ -484,7 +484,7 @@ HeatStressRca <- ggtern(data=df,aes(A,B,D)) +
                  size=log2tpm,
                  shape=Stress,
                  stroke = 4)) +
-  scale_shape_manual(values=c(21, 16)) +
+  scale_shape_manual(values=c(16, 21)) +
   scale_size_binned(range = c(1, 15),
                     breaks = c(7.5, 10, 12.5)) +
   scale_color_manual(values=c("#cab2d6", "#6a3d9a")) +
@@ -493,7 +493,7 @@ HeatStressRca <- ggtern(data=df,aes(A,B,D)) +
          shape = guide_legend(override.aes = list(size=5))) +
   theme(plot.title = element_text(size = 30),
         text = element_text(size=20))+
-  labs(subtitle="Heat Stress",
+  labs(subtitle="",
        fill = "Classification",
        T="B",
        L="A",
