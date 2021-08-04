@@ -460,7 +460,7 @@ HeatStress <- ggtern(data=df,aes(A,B,D)) +
          shape = guide_legend(override.aes = list(size=5))) +
   theme(plot.title = element_text(size = 30),
         text = element_text(size=20))+
-  labs(title="Heat Stress",
+  labs(title="",
        fill = "Classification",
        T="B",
        L="A",
