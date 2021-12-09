@@ -382,6 +382,7 @@ LeavesShoots <- ggtern(data=df,aes(A,B,D)) +
   guides(colour = guide_legend(override.aes = list(size=5))) +
   theme(plot.title = element_text(size = 30),
         text = element_text(size=20))+
+  theme_showarrows() +
   labs(title = "A",
        subtitle="Leaves and Shoots",
        fill = "Classification",
@@ -412,6 +413,7 @@ Spike <- ggtern(data=df,aes(A,B,D)) +
   guides(colour = guide_legend(override.aes = list(size=5))) +
   theme(plot.title = element_text(size = 30),
         text = element_text(size=20))+
+  theme_showarrows() +
   labs(title="B",
        subtitle="Spike",
        fill = "Classification",
@@ -448,6 +450,7 @@ HeatStress <- ggtern(data=df,aes(A,B,D)) +
          shape = guide_legend(override.aes = list(size=5))) +
   theme(plot.title = element_text(size = 30),
         text = element_text(size=20))+
+  theme_showarrows() +
   labs(title="",
        fill = "Classification",
        T="B",
@@ -482,6 +485,7 @@ HeatStressRca <- ggtern(data=df,aes(A,B,D)) +
          shape = guide_legend(override.aes = list(size=5))) +
   theme(plot.title = element_text(size = 30),
         text = element_text(size=20))+
+  theme_showarrows() +
   labs(subtitle="",
        fill = "Classification",
        T="B",

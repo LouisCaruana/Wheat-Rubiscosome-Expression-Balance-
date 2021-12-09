@@ -21,15 +21,15 @@ Wheat Rubiscosome Expression Balance Report
 This study will only use data from the 7 studies listed below, that
 report similar non stress growth conditions in their manuscript;
 
-| Study Name                                                   | Study Code    |
-|--------------------------------------------------------------|---------------|
-| Developmental time-course of Chinese Spring                  | choulet\_URGI |
-| Chinese Spring seedling and spikes at anthesis               | CS\_methylome |
-| Chinese Spring leaves and roots from seven leaf stage        | Aneuploidy    |
-| Chinese Spring early meiosis, early prophase                 | PRJEB25586    |
-| Developmental time-course of Azhurnaya                       | Development   |
-| Gene expression during a time course of flag leaf senescence | PRJNA497810   |
-| Drought and heat stress time course in seedlings\*           | SRP045409     |
+| Study Name                                                   | Study Code   |
+|--------------------------------------------------------------|--------------|
+| Developmental time-course of Chinese Spring                  | choulet_URGI |
+| Chinese Spring seedling and spikes at anthesis               | CS_methylome |
+| Chinese Spring leaves and roots from seven leaf stage        | Aneuploidy   |
+| Chinese Spring early meiosis, early prophase                 | PRJEB25586   |
+| Developmental time-course of Azhurnaya                       | Development  |
+| Gene expression during a time course of flag leaf senescence | PRJNA497810  |
+| Drought and heat stress time course in seedlings\*           | SRP045409    |
 
 \*Data from this study will exclusively be used for the heat stress
 analysis
@@ -72,7 +72,7 @@ Gene_IDs
 -   Filters data for only the study codes in the above table
 -   Adds a Gene and Triad column containing strings supplied under y and
     z
--   Renames the Gene\_ID column names to subgenome\_tpm e.g. `A_tpm`
+-   Renames the Gene_ID column names to subgenome_tpm e.g. `A_tpm`
 -   Selects for only relevent columns
 
 ``` r
@@ -394,6 +394,7 @@ LeavesShoots <- ggtern(data=df,aes(A,B,D)) +
   guides(colour = guide_legend(override.aes = list(size=5))) +
   theme(plot.title = element_text(size = 30),
         text = element_text(size=20))+
+  theme_showarrows() +
   labs(title = "A",
        subtitle="Leaves and Shoots",
        fill = "Classification",
@@ -425,6 +426,7 @@ Spike <- ggtern(data=df,aes(A,B,D)) +
   guides(colour = guide_legend(override.aes = list(size=5))) +
   theme(plot.title = element_text(size = 30),
         text = element_text(size=20))+
+  theme_showarrows() +
   labs(title="B",
        subtitle="Spike",
        fill = "Classification",
@@ -460,6 +462,7 @@ HeatStress <- ggtern(data=df,aes(A,B,D)) +
          shape = guide_legend(override.aes = list(size=5))) +
   theme(plot.title = element_text(size = 30),
         text = element_text(size=20))+
+  theme_showarrows() +
   labs(title="",
        fill = "Classification",
        T="B",
@@ -493,6 +496,7 @@ HeatStressRca <- ggtern(data=df,aes(A,B,D)) +
          shape = guide_legend(override.aes = list(size=5))) +
   theme(plot.title = element_text(size = 30),
         text = element_text(size=20))+
+  theme_showarrows() +
   labs(subtitle="",
        fill = "Classification",
        T="B",
